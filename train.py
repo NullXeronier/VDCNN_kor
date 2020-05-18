@@ -99,9 +99,9 @@ def train(x_train, y_train, x_test, y_test):
     print('-'*30)
     print()
 
-def test():
-    model = VDCNN()
-    model.predict()
+# def test():
+#     model = VDCNN()
+#     model.predict()
 
 
 
