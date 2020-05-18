@@ -9,3 +9,4 @@
 
 3. GPU 갖고싶..
 VDCNN 한국어 적용 코드입니다.
+4.https://arxiv.org/pdf/1606.01781.pdf
