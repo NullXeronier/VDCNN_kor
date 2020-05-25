@@ -20,6 +20,7 @@ class KMaxPooling(Layer):
         
         # extract top_k, returns two tensors [values, indices]
         top_k = tf.nn.top_k(shifted_inputs, k=self.k, sorted=self.sorted)[0]
+        # top_k = tf.math.top_k
         
         # return flattened output
         return tf.transpose(top_k, [0,2,1])
