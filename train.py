@@ -13,23 +13,22 @@ import h5py
 import math
 import sys
 import datetime
-from word2vec import make_embedding_vectors
-import json
+from absl import flags
 from vdcnn import *
 from data_helper import *
 import custom_callbacks
 
 # Parameters settings
 # Data loading params
-tf.flags.DEFINE_string("database_path", "dataset/kor_blue/", "Path for the dataset to be used.")
+flags.DEFINE_string("database_path", "dataset/Blue_house/", "Path for the dataset to be used.")
 
 # Model Hyperparameters
-tf.flags.DEFINE_integer("sequence_length", 1024, "Sequence Max Length (default: 1024)")
-tf.flags.DEFINE_string("pool_type", "max", "Types of downsampling methods, use either three of max (maxpool), k_max (k-maxpool) or conv (linear) (default: 'max')")
-tf.flags.DEFINE_integer("depth", 9, "Depth for VDCNN, use either 9, 17, 29 or 47 (default: 9)")
-tf.flags.DEFINE_boolean("shortcut", False, "Use optional shortcut (default: False)")
-tf.flags.DEFINE_boolean("sorted", False, "Sort during k-max pooling (default: False)")
-tf.flags.DEFINE_boolean("use_bias", False, "Use bias for all conv1d layers (default: False)")
+flags.DEFINE_integer("sequence_length", 1024, "Sequence Max Length (default: 1024)")
+flags.DEFINE_string("pool_type", "max", "Types of downsampling methods, use either three of max (maxpool), k_max (k-maxpool) or conv (linear) (default: 'max')")
+flags.DEFINE_integer("depth", 9, "Depth for VDCNN, use either 9, 17, 29 or 47 (default: 9)")
+flags.DEFINE_boolean("shortcut", False, "Use optional shortcut (default: False)")
+flags.DEFINE_boolean("sorted", False, "Sort during k-max pooling (default: False)")
+flags.DEFINE_boolean("use_bias", False, "Use bias for all conv1d layers (default: False)")
 
 # Training parameters
 flags.DEFINE_integer("batch_size", 64, "Batch Size (default: 64)")
@@ -49,16 +48,10 @@ data_helper = data_helper(sequence_max_length=FLAGS.sequence_length)
 def preprocess():
     # Data Preparation
     # ==================================================
-
-    # Load data
-    print("데이터 로딩중...")
+    # Load dataset
+    print("Loading dataset...")
     train_data, train_label, test_data, test_label = data_helper.load_dataset(FLAGS.database_path)
-    embedding, vocab, vocab_size = make_embedding_vectors(list(train_data))
-    print("데이터 로딩 성공!!!")
-
-    # save vocab, vocab_size, max_length
-    with open('vocab.json', 'w') as fp:
-        json.dump(vocab, fp)
+    print("Loading dataset succees...")
 
     return train_data, train_label, test_data, test_label
 
@@ -98,12 +91,6 @@ def train(x_train, y_train, x_test, y_test):
     K.clear_session()
     print('-'*30)
     print()
-
-# def test():
-#     model = VDCNN()
-#     model.predict()
-
-
 
 if __name__=='__main__':
     x_train, y_train, x_test, y_test = preprocess()

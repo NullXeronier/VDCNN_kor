@@ -3,8 +3,10 @@ from keras.layers import Flatten
 import tensorflow as tf
 
 class KMaxPooling(Layer):
-
-    # 맥스풀링 후 K번째 높은 활성화된 값을 추출하는 코드이다.
+    """
+    K-max pooling layer that extracts the k-highest activations from a sequence (2nd dimension).
+    TensorFlow backend.
+    """
     def __init__(self, k=1, sorted=True, **kwargs):
         super().__init__(**kwargs)
         self.input_spec = InputSpec(ndim=3)
@@ -20,7 +22,6 @@ class KMaxPooling(Layer):
         
         # extract top_k, returns two tensors [values, indices]
         top_k = tf.nn.top_k(shifted_inputs, k=self.k, sorted=self.sorted)[0]
-        # top_k = tf.math.top_k
         
         # return flattened output
         return tf.transpose(top_k, [0,2,1])

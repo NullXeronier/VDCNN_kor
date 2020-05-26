@@ -4,6 +4,7 @@ from keras.layers import Input, Embedding, Conv1D, BatchNormalization, Activatio
 from keras.engine.topology import get_source_inputs
 from k_maxpooling import *
 
+
 def identity_block(inputs, filters, kernel_size=3, use_bias=False, shortcut=False):
     conv1 = Conv1D(filters=filters, kernel_size=kernel_size, strides=1, padding='same')(inputs)
     bn1 = BatchNormalization()(conv1)
@@ -13,6 +14,7 @@ def identity_block(inputs, filters, kernel_size=3, use_bias=False, shortcut=Fals
     if shortcut:
         out = Add()([out, inputs])
     return Activation('relu')(out)
+
 
 def conv_block(inputs, filters, kernel_size=3, use_bias=False, shortcut=False, 
                pool_type='max', sorted=True, stage=1):
@@ -37,6 +39,7 @@ def conv_block(inputs, filters, kernel_size=3, use_bias=False, shortcut=False,
         out = BatchNormalization(name='1_1_batch_normalization_%d' % stage)(out)
     return out
 
+
 def downsample(inputs, pool_type='max', sorted=True, stage=1):
     if pool_type == 'max':
         out = MaxPooling1D(pool_size=3, strides=2, padding='same', name='pool_%d' % stage)(inputs)
@@ -51,6 +54,7 @@ def downsample(inputs, pool_type='max', sorted=True, stage=1):
     else:
         raise ValueError('unsupported pooling type!')
     return out
+
 
 def VDCNN(num_classes, depth=9, sequence_length=1024, embedding_dim=16, 
           shortcut=False, pool_type='max', sorted=True, use_bias=False, input_tensor=None):
