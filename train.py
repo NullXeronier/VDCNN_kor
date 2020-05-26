@@ -13,7 +13,6 @@ import h5py
 import math
 import sys
 import datetime
-from absl import flags
 from vdcnn import *
 from data_helper import *
 import custom_callbacks
