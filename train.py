@@ -19,7 +19,7 @@ import custom_callbacks
 
 # Parameters settings
 # Data loading params
-flags.DEFINE_string("database_path", "dataset/Blue_house/", "Path for the dataset to be used.")
+flags.DEFINE_string("database_path", "dataset/Dataset_name/", "Path for the dataset to be used.")
 
 # Model Hyperparameters
 flags.DEFINE_integer("sequence_length", 1024, "Sequence Max Length (default: 1024)")
