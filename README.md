@@ -6,6 +6,6 @@
 
 3. VDCNN 한국어 적용 코드입니다.
 
-4. 챗봇 대화, 의도 데이터는 Aihub에서 아직 승인이 나지 않아서 https://dacon.io/competitions/open/235597/data/ 로 대체합니다.
+4. 챗봇 대화, 의도 데이터 크롤링 중에 있습니다.
 
 5. https://arxiv.org/pdf/1606.01781.pdf
