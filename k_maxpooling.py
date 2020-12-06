@@ -1,5 +1,4 @@
-from keras.engine import Layer, InputSpec
-from keras.layers import Flatten
+from tensorflow.keras.layers import Layer, InputSpec, Flatten
 import tensorflow as tf
 
 class KMaxPooling(Layer):
@@ -12,7 +11,17 @@ class KMaxPooling(Layer):
         self.input_spec = InputSpec(ndim=3)
         self.k = k
         self.sorted = sorted
-
+        
+    def get_config(self):
+        config = super().get_config().copy()
+        config.update({
+            'input_spec' : self.input_spec,
+            'k': self.k,
+            'sorted' : self.sorted
+        })
+        return config
+        
+        
     def compute_output_shape(self, input_shape):
         return (input_shape[0], self.k, input_shape[2])
 
@@ -25,3 +34,5 @@ class KMaxPooling(Layer):
         
         # return flattened output
         return tf.transpose(top_k, [0,2,1])
+    
+     

@@ -1,7 +1,7 @@
-import keras
-from keras.models import Model
-from keras.layers import Input, Embedding, Conv1D, BatchNormalization, Activation, Add, MaxPooling1D, Dense, Flatten
-from keras.engine.topology import get_source_inputs
+# import keras
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Embedding, Conv1D, BatchNormalization, Activation, Add, MaxPooling1D, Dense, Flatten
+# from keras.engine.topology import get_source_inputs
 from k_maxpooling import *
 
 
@@ -44,7 +44,7 @@ def downsample(inputs, pool_type='max', sorted=True, stage=1):
     if pool_type == 'max':
         out = MaxPooling1D(pool_size=3, strides=2, padding='same', name='pool_%d' % stage)(inputs)
     elif pool_type == 'k_max':
-        k = int(inputs._keras_shape[1]/2)
+        k = int(inputs.shape[1]/2)
         out = KMaxPooling(k=k, sorted=sorted, name='pool_%d' % stage)(inputs)
     elif pool_type == 'conv':
         out = Conv1D(filters=inputs._keras_shape[-1], kernel_size=3, strides=2, padding='same', name='pool_%d' % stage)(inputs)
@@ -56,7 +56,7 @@ def downsample(inputs, pool_type='max', sorted=True, stage=1):
     return out
 
 
-def VDCNN(num_classes, depth=9, sequence_length=1024, embedding_dim=16, 
+def VDCNN(num_classes, depth=9, sequence_length=1024, embedding_dim=8, 
           shortcut=False, pool_type='max', sorted=True, use_bias=False, input_tensor=None):
     if depth == 9:
         num_conv_blocks = (1, 1, 1, 1)
@@ -70,6 +70,7 @@ def VDCNN(num_classes, depth=9, sequence_length=1024, embedding_dim=16,
         raise ValueError('unsupported depth for VDCNN.')
 
     inputs = Input(shape=(sequence_length, ), name='inputs')
+    print(inputs.shape)
     embedded_chars = Embedding(input_dim=sequence_length, output_dim=embedding_dim)(inputs)
     out = Conv1D(filters=64, kernel_size=3, strides=1, padding='same', name='temp_conv')(embedded_chars)
 
@@ -102,6 +103,7 @@ def VDCNN(num_classes, depth=9, sequence_length=1024, embedding_dim=16,
     out = Flatten()(out)
 
     # Dense Layers
+    # out = Dense(2048, activation='relu')(out)
     out = Dense(2048, activation='relu')(out)
     out = Dense(2048, activation='relu')(out)
     out = Dense(num_classes, activation='softmax')(out)
