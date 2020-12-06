@@ -4,7 +4,7 @@
 ![image](https://user-images.githubusercontent.com/36034521/82163535-e465d380-98e6-11ea-9399-1c7ba5396417.png)
 ![image](https://user-images.githubusercontent.com/36034521/82165436-fb5cf380-98ef-11ea-8880-7b0de34d2d26.png)
 
-3. VDCNN 한국어 적용 코드입니다.(데이콘의 자연어처리>국민청원 데이터셋으로 테스트 중입니다.)
+3. VDCNN 한국어 적용 코드입니다.https://dacon.io/competitions/open/235597/data/
 
 4. 데이콘 데이터셋 적용 결과: 0.8624
 
